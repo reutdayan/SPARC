@@ -367,6 +367,71 @@
 </section>
 <!-- End Motivation -->
 
+<!-- Results -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Results</h2>
+    <div class="content has-text-justified">
+      <p>
+        SPARC achieves state-of-the-art performance across major graph learning tasks — classification, clustering, and link prediction — maintaining high accuracy even for cold-start nodes without adjacency information.
+      </p>
+    </div>
+
+    <!-- Node Classification -->
+    <h3 class="title is-4 has-text-centered" style="margin-top: 2rem;">Node Classification</h3>
+    <figure class="image">
+      <img src="static/images/results_classification.png" alt="Node classification results across datasets for SPARC variants compared to baselines">
+      <figcaption class="has-text-centered" style="margin-top: 0.75rem; color: var(--text-secondary); font-size: 0.95rem;">
+        <strong>SPARC models</strong> outperform baselines on all datasets, showing strong <strong>generalization and scalability</strong>.
+      </figcaption>
+    </figure>
+
+    <!-- Node Clustering -->
+    <h3 class="title is-4 has-text-centered" style="margin-top: 2.5rem;">Node Clustering</h3>
+    <figure class="image">
+      <img src="static/images/results_clustering.png" alt="Node clustering results across datasets">
+      <figcaption class="has-text-centered" style="margin-top: 0.75rem; color: var(--text-secondary); font-size: 0.95rem;">
+        SPARC maintains high clustering accuracy on <strong>cold-start nodes</strong>, unlike prior methods that rely on adjacency.
+      </figcaption>
+    </figure>
+
+    <!-- Link Prediction -->
+    <h3 class="title is-4 has-text-centered" style="margin-top: 2.5rem;">Link Prediction</h3>
+    <figure class="image">
+      <img src="static/images/results_link_prediction.png" alt="Link prediction comparison across datasets">
+      <figcaption class="has-text-centered" style="margin-top: 0.75rem; color: var(--text-secondary); font-size: 0.95rem;">
+        Even without training for this task, <strong>SPARC performs on par with specialized models</strong>, capturing structural relationships effectively.
+      </figcaption>
+    </figure>
+  </div>
+</section>
+<!-- End Results -->
+
+<!-- Robustness -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-vcentered is-variable is-6">
+      <div class="column is-6">
+        <h2 class="title is-3 has-text-centered">Robustness</h2>
+        <div class="content has-text-justified">
+          <p>
+            SPARC remains highly accurate even when a large portion of the graph consists of cold-start nodes. As shown below, while traditional models like GraphSAGE experience a sharp drop in performance as the cold-start percentage increases, SPARC maintains strong accuracy, demonstrating its ability to generalize to unseen nodes. The feature-based (FB) transformer, which ignores adjacency entirely, performs consistently lower—highlighting the advantage of SPARC’s learned spectral representation.
+          </p>
+        </div>
+      </div>
+      <div class="column is-6">
+        <figure class="image">
+          <img src="static/images/coldstart_analysis.png" alt="Cold-start proportion analysis on Reddit comparing SPARCphormer, GraphSAGE, and FB Transformer">
+          <figcaption class="has-text-centered" style="margin-top: 0.75rem; color: var(--text-secondary); font-size: 0.95rem;">
+            Cold-start proportion analysis on the Reddit dataset. SPARCphormer shows robust performance across increasing cold-start ratios, outperforming GraphSAGE and the feature-based transformer by a wide margin.
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Robustness -->
+
 <!--BibTex citation -->
   <section class="section" id="BibTeX">
     <div class="container is-max-desktop content">
@@ -386,7 +451,6 @@
     </div>
 </section>
 <!--End BibTex citation -->
-
 
   <footer class="footer">
   <div class="container">
