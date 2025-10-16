@@ -333,6 +333,7 @@ body {
 /* Contributions Section */
 .contributions .columns {
   align-items: stretch;
+  justify-content: center;
 }
 
 .contributions .box {
