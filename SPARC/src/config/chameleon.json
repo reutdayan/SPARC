@@ -1,0 +1,48 @@
+{
+    "dataset": "chameleon",
+    "n_clusters": 5,
+    "is_sparse_graph": false,
+    "should_check_generalization": true,
+    "spectral": {
+        "architecture": {
+            "n_layers": 4,
+            "hidden_dim1": 1024,
+            "hidden_dim2": 1024,
+            "hidden_dim3": 512,
+            "output_dim": 32
+        },
+        "epochs": 1000,
+        "lr": 0.001,
+        "lr_decay": 0.1,
+        "min_lr": 1e-07,
+        "batch_size": 100000,
+        "n_neighbors": 8,
+        "scale_k": 2,
+        "is_local_scale": false,
+        "n_clusters": 5,
+        "patience": 10,
+        "bsize": 100000,
+        "num_clusters": 1,
+        "num_clusters_val": 1,
+        "num_clusters_test": 1,
+        "diag_lambda": -1
+    },
+    "diagnostics": {
+        "eigenspace_agreement": true,
+        "k": null,
+        "laplacian_type": "sym_multihop",
+        "drop_first": false,
+        "restrict_to_lcc": true,
+        "eig_method": "auto",
+        "eig_tol": 1e-06,
+        "max_nodes": 150000
+    },
+    "augmentation": {
+        "feature_knn": {
+            "enabled": false,
+            "k": 10,
+            "metric": "cosine",
+            "mutual": true
+        }
+    }
+}

@@ -1,0 +1,68 @@
+# --- SPARC data (see data/README.md) ---
+data/data/
+data/data_splits/
+data/partition_cache/
+
+# --- SPARC training outputs ---
+SPARC/sparc_results/
+SPARC/src/weights/
+
+# --- TensorFlow / GraphSAGE checkpoints ---
+tmp/
+*.ckpt
+*.ckpt.*
+*.meta
+*.index
+checkpoint
+
+# --- PyTorch ---
+*.pth
+*.pt
+
+# --- Large arrays (generated; not source) ---
+*.npy
+*.npz
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.eggs/
+dist/
+build/
+*.egg
+
+# --- Virtual environments ---
+.venv/
+venv/
+env/
+.env
+
+# --- Jupyter ---
+.ipynb_checkpoints/
+
+# --- Logs & experiment trackers ---
+*.log
+logs/
+wandb/
+runs/
+tensorboard/
+.tb_logs/
+
+# --- IDE & OS ---
+.idea/
+.vscode/
+*.swp
+*~
+.DS_Store
+Thumbs.db
+
+# --- Coverage / test ---
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/

@@ -1,0 +1,8 @@
+name: SPARC
+channels:
+  - defaults
+dependencies:
+  - metis
+  - pip
+  - python=3.9
+prefix: /home/dsi/dayanre2/.conda/envs/SPARC
