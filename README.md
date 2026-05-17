@@ -29,49 +29,7 @@ embeddings serve as drop-in geometry for downstream classifiers — we provide t
 - **Benchmarked datasets.** `cora`, `citeseer`, `pubmed`, `chameleon`, `squirrel`,
   `wikics`, `reddit`, `ogbn-arxiv`, `ogbn-products`.
 
----
 
-## Repository layout
-
-```
-SPARC/
-├── data/                            # Dataset download, splitting, loading
-│   ├── download_data.py             # PyG/OGB → GraphSAGE format + canonical split
-│   ├── split_data.py                # Random / original cold-start splits
-│   ├── load_data.py                 # Loaders + inductive adjacency builder
-│   └── README.md
-│
-├── SPARC/
-│   ├── src/                         # SPARC spectral encoder (training entry point)
-│   │   ├── main.py                  # CLI: data → partition → train → metrics → save
-│   │   ├── SpectralNet.py           # MLP wrapper around SpectralTrainer
-│   │   ├── SpectralTrainer.py       # Model, losses, training loop
-│   │   ├── neighborhood_prediction.py
-│   │   ├── eigenspace_diagnostics.py
-│   │   ├── partition_utils.py / partition_cache.py
-│   │   ├── metrics.py / utils.py
-│   │   ├── config/<dataset>.json    # Per-dataset hyperparameters
-│   │   └── README.md
-│   │
-│   ├── implementations/
-│   │   ├── SPARC-GCN/               # GCN on real graph + SPARC channel  (TF 1.x compat)
-│   │   ├── SPARC-SAGE/              # GraphSAGE on SPARC-kNN synthetic graph (TF 2.x compat)
-│   │   └── SPARCphormer/            # Transformer on multi-hop token sequences (PyTorch)
-│   │
-│   └── sparc_results/<dataset>/<run>/   # Trained embeddings + masks + metrics (gitignored)
-│
-├── environment.yml                  # Conda env (Python 3.9 + METIS)
-├── requirements.txt                 # Pinned pip dependencies
-└── README.md                        # (this file)
-```
-
-Each component has its own README with full CLI flags and details:
-
-- [`data/README.md`](data/README.md)
-- [`SPARC/src/README.md`](SPARC/src/README.md)
-- [`SPARC/implementations/SPARC-GCN/README.md`](SPARC/implementations/SPARC-GCN/README.md)
-- [`SPARC/implementations/SPARC-SAGE/README.md`](SPARC/implementations/SPARC-SAGE/README.md)
-- [`SPARC/implementations/SPARCphormer/README.md`](SPARC/implementations/SPARCphormer/README.md)
 
 ---
 
@@ -121,6 +79,52 @@ python train.py --dataset cora --use_sparc_only True --epochs 75
 ```
 
 Run each script from its own directory so default relative paths resolve correctly.
+
+
+
+---
+
+## Repository layout
+
+```
+SPARC/
+├── data/                            # Dataset download, splitting, loading
+│   ├── download_data.py             # PyG/OGB → GraphSAGE format + canonical split
+│   ├── split_data.py                # Random / original cold-start splits
+│   ├── load_data.py                 # Loaders + inductive adjacency builder
+│   └── README.md
+│
+├── SPARC/
+│   ├── src/                         # SPARC spectral encoder (training entry point)
+│   │   ├── main.py                  # CLI: data → partition → train → metrics → save
+│   │   ├── SpectralNet.py           # MLP wrapper around SpectralTrainer
+│   │   ├── SpectralTrainer.py       # Model, losses, training loop
+│   │   ├── neighborhood_prediction.py
+│   │   ├── eigenspace_diagnostics.py
+│   │   ├── partition_utils.py / partition_cache.py
+│   │   ├── metrics.py / utils.py
+│   │   ├── config/<dataset>.json    # Per-dataset hyperparameters
+│   │   └── README.md
+│   │
+│   ├── implementations/
+│   │   ├── SPARC-GCN/               # GCN on real graph + SPARC channel  (TF 1.x compat)
+│   │   ├── SPARC-SAGE/              # GraphSAGE on SPARC-kNN synthetic graph (TF 2.x compat)
+│   │   └── SPARCphormer/            # Transformer on multi-hop token sequences (PyTorch)
+│   │
+│   └── sparc_results/<dataset>/<run>/   # Trained embeddings + masks + metrics (gitignored)
+│
+├── environment.yml                  # Conda env (Python 3.9 + METIS)
+├── requirements.txt                 # Pinned pip dependencies
+└── README.md                        # (this file)
+```
+
+Each component has its own README with full CLI flags and details:
+
+- [`data/README.md`](data/README.md)
+- [`SPARC/src/README.md`](SPARC/src/README.md)
+- [`SPARC/implementations/SPARC-GCN/README.md`](SPARC/implementations/SPARC-GCN/README.md)
+- [`SPARC/implementations/SPARC-SAGE/README.md`](SPARC/implementations/SPARC-SAGE/README.md)
+- [`SPARC/implementations/SPARCphormer/README.md`](SPARC/implementations/SPARCphormer/README.md)
 
 ---
 
