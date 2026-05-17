@@ -4,8 +4,7 @@ Reference implementation for the paper
 
 > **Leveraging Graph Geometry for Cold-Start Node Prediction.**
 
-SPARC (**SP**ectral **A**lignment with **R**ayleigh-quotient **C**old-start) learns an
-**inductive spectral encoder** that maps node features into a low-dimensional space aligned
+SPARC learns an **inductive spectral encoder** that maps node features into a low-dimensional space aligned
 with the graph Laplacian spectrum. The encoder is trained on a *cold-start* split where
 validation and test nodes are isolated from the graph during training, and is then used at
 inference time to embed previously unseen nodes from features alone. The resulting
