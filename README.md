@@ -14,13 +14,7 @@ The retrieved pseudo-neighborhoods can be used as a plug-in structural context f
 
 Most graph neural networks require neighborhood information at inference time. This assumption breaks in the strict cold-start setting, where newly arriving nodes have no observed incident edges.
 
-SPARC addresses this by learning a parametric encoder:
-
-\[
-F_\theta : x_v \rightarrow z_v
-\]
-
-that maps node features to a low-dimensional spectral representation approximating the graph Laplacian eigenspace. At inference time, a cold-start node is embedded from its features alone, and its pseudo-neighborhood is retrieved using k-nearest neighbors in the learned SPARC space.
+SPARC addresses this by learning a parametric encoder that maps node features to a low-dimensional spectral representation approximating the graph Laplacian eigenspace. At inference time, a cold-start node is embedded from its features alone, and its pseudo-neighborhood is retrieved using k-nearest neighbors in the learned SPARC space.
 
 ---
 
