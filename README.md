@@ -1,36 +1,50 @@
 # SPARC: Leveraging Graph Geometry for Cold-Start Node Prediction
 
-Reference implementation for the paper
+Official implementation for:
 
-> **Leveraging Graph Geometry for Cold-Start Node Prediction.**
+> **Leveraging Graph Geometry for Cold-Start Node Prediction**
 
-SPARC learns an **inductive spectral encoder** that maps node features into a low-dimensional space aligned
-with the graph Laplacian spectrum. The encoder is trained on a *cold-start* split where
-validation and test nodes are isolated from the graph during training, and is then used at
-inference time to embed previously unseen nodes from features alone. The resulting
-embeddings serve as drop-in geometry for downstream classifiers — we provide three:
-**SPARC-GCN**, **SPARC-SAGE**, and **SPARCphormer**.
+SPARC is a framework for **strict cold-start node prediction**, where test nodes arrive with features but without observed edges. The method learns an inductive feature-to-spectral mapping that places unseen nodes in a graph-geometry-aware space, enabling pseudo-neighborhood retrieval without test-time adjacency.
+
+The retrieved pseudo-neighborhoods can be used as a plug-in structural context for downstream graph models, including GraphSAGE, Spectral-GCN, and NAGphormer-style graph transformers.
 
 ---
 
-## Highlights
+## Overview
 
-- **Inductive spectral embeddings.** An MLP trained with a
-  Rayleigh-quotient style loss on multihop affinities. At test time
-  the encoder produces embeddings for cold-start nodes from features alone — no retraining,
-  no eigendecomposition of the full graph.
-- **Cold-start by construction.** The training adjacency keeps train–train edges only;
-  val/test nodes are never observed during message passing.
-- **Three downstream classifiers.**
-  - `SPARC-GCN` — GCN on the real graph with raw features + SPARC embeddings as a second
-    input channel.
-  - `SPARC-SAGE` — GraphSAGE on a *synthetic* kNN graph built in SPARC embedding space.
-  - `SPARCphormer` — Transformer over multi-hop token sequences in the sparc space.
-- **Benchmarked datasets.** `cora`, `citeseer`, `pubmed`, `chameleon`, `squirrel`,
-  `wikics`, `reddit`, `ogbn-arxiv`, `ogbn-products`.
+Most graph neural networks require neighborhood information at inference time. This assumption breaks in the strict cold-start setting, where newly arriving nodes have no observed incident edges.
 
+SPARC addresses this by learning a parametric encoder:
 
+\[
+F_\theta : x_v \rightarrow z_v
+\]
 
+that maps node features to a low-dimensional spectral representation approximating the graph Laplacian eigenspace. At inference time, a cold-start node is embedded from its features alone, and its pseudo-neighborhood is retrieved using k-nearest neighbors in the learned SPARC space.
+
+---
+
+## Key features
+
+- **Strict cold-start setting**  
+  Test nodes are unseen during training and have no observed edges at inference time.
+
+- **Inductive spectral representation**  
+  SPARC learns a feature-to-spectral encoder, avoiding full-graph eigendecomposition at inference.
+
+- **Pseudo-neighborhood retrieval**  
+  Cold-start nodes retrieve structurally meaningful neighbors in SPARC space.
+
+- **Backbone-agnostic design**  
+  SPARC modifies the neighborhood construction step, not the downstream architecture.
+
+- **Supported downstream models**  
+  - `SPARC-GCN`
+  - `SPARC-SAGE`
+  - `SPARCphormer`
+
+- **Benchmarked datasets**  
+  `Cora`, `Citeseer`, `Pubmed`, `Chameleon`, `Squirrel`, `Wiki-CS`, `Reddit`, and `ogbn-products`.
 ---
 
 ## Installation
