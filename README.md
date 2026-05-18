@@ -40,55 +40,100 @@ SPARC addresses this by learning a parametric encoder that maps node features to
 - **Benchmarked datasets**  
   `Cora`, `Citeseer`, `Pubmed`, `Chameleon`, `Squirrel`, `Wiki-CS`, `Reddit`, and `ogbn-products`.
 ---
-
 ## Installation
 
-### 1. Conda environment (recommended)
-
-The conda recipe installs Python 3.9 and the native **METIS** library, which is required
-for graph partitioning during training.
+We recommend using the provided Conda environment.
 
 ```bash
 conda env create -f environment.yml
 conda activate SPARC
 pip install -r requirements.txt
 ```
-```
 
-## Quick start (Cora, end-to-end)
+---
 
-The pipeline runs in three stages: **download → train SPARC → run a downstream classifier**.
+## Quick Start
+
+The pipeline consists of three stages:
+
+1. Download and preprocess the dataset.
+2. Train the SPARC encoder.
+3. Run a downstream cold-start classifier.
+
+### 1. Download Data
 
 ```bash
-# 1. Download Cora and convert to GraphSAGE format
 cd data
-python download_data.py            # edit __main__ to choose datasets
+python download_data.py
 cd ..
-
-# 2. Train SPARC spectral embeddings (random cold-start split, seed 42)
-cd SPARC/src
-python main.py --dataset cora --seed 42 --test_ratio 0.10 --val_ratio 0.10 --split_name random
-# → SPARC/sparc_results/cora/random_test0.10_seed42/{embeddings,features,labels,*_mask}.npy
-
-# 3a. Downstream: SPARCphormer (PyTorch transformer)
-cd ../implementations/SPARCphormer
-python train.py --dataset cora --space spectral --hops 5 \
-    --split_name random --test_ratio 0.10 --sparc_seed 42
-
-# 3b. Downstream: SPARC-SAGE (synthetic kNN GraphSAGE)
-cd ../SPARC-SAGE
-python -m graphsage.supervised_train \
-    --cli_dataset cora --cli_seed 42 --cli_test_ratio 0.10 \
-    --cli_split_name random --sparc_topk 10
-
-# 3c. Downstream: SPARC-GCN (GCN with dual feature/spectral input)
-cd ../SPARC-GCN
-python train.py --dataset cora --use_sparc_only True --epochs 75
 ```
 
-Run each script from its own directory so default relative paths resolve correctly.
+Edit `data/download_data.py` to select the desired dataset.
 
+---
 
+### 2. Train SPARC Embeddings
+
+```bash
+cd SPARC/src
+
+python main.py \
+    --dataset cora \
+    --seed 42 \
+    --test_ratio 0.10 \
+    --val_ratio 0.10 \
+    --split_name random
+```
+
+The learned embeddings, labels, features, and masks are saved under:
+
+```bash
+SPARC/sparc_results/cora/random_test0.10_seed42/
+```
+
+---
+
+### 3. Run a Downstream Model
+
+#### SPARCphormer
+
+```bash
+cd ../implementations/SPARCphormer
+
+python train.py \
+    --dataset cora \
+    --space spectral \
+    --hops 5 \
+    --split_name random \
+    --test_ratio 0.10 \
+    --sparc_seed 42
+```
+
+#### SPARC-SAGE
+
+```bash
+cd ../SPARC-SAGE
+
+python -m graphsage.supervised_train \
+    --cli_dataset cora \
+    --cli_seed 42 \
+    --cli_test_ratio 0.10 \
+    --cli_split_name random \
+    --sparc_topk 10
+```
+
+#### SPARC-GCN
+
+```bash
+cd ../SPARC-GCN
+
+python train.py \
+    --dataset cora \
+    --use_sparc_only True \
+    --epochs 75
+```
+
+Run each script from its corresponding directory so that relative paths are resolved correctly.
 
 ---
 
@@ -142,13 +187,6 @@ Each component has its own README with full CLI flags and details:
    under `data/data/<name>/`).
 2. Create `SPARC/src/config/<name>.json` (copy an existing config and tune `n_clusters`
    and the `spectral` block).
-3. Run the standard pipeline:
-
-   ```bash
-   cd SPARC/src
-   python main.py --dataset <name> --split_name random --test_ratio 0.10 --seed 42
-   ```
-
 ---
 
 ## Citation
@@ -163,8 +201,6 @@ If you use this code, please cite:
   year    = {2026}
 }
 ```
-
-(Update the BibTeX entry once the paper is published.)
 
 ---
 
